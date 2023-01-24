@@ -66,6 +66,22 @@
                     <div class="card-header">{{ __('Sample login') }}</div>
                     <div class="card-body">
                         <div class="card">
+                            <div class="card-header">{{ __('SuperAdmin') }}</div>
+                            <div class="card-body d-flex justify-content-between">
+                                <div>
+                                    Email Address :
+                                    <span id="superAdminEmail">
+                                        superadmin@superadmin.com
+                                    </span>
+                                    <br>
+                                    Password : password
+                                </div>
+                                <button type="submit" class="btn btn-primary" onclick="copy('superadmin')">
+                                    {{ __('Copy') }}
+                                </button>
+                            </div>
+                        </div>
+                        <div class="card">
                             <div class="card-header">{{ __('Admin') }}</div>
                             <div class="card-body d-flex justify-content-between">
                                 <div>
@@ -121,11 +137,13 @@
 
     <script>
         function copy(value) {
-            if(value == "admin") {
+            if (value == "superadmin") {
+                document.getElementById("email").value = document.getElementById("superAdminEmail").innerHTML;
+            } else if (value == "admin") {
                 document.getElementById("email").value = document.getElementById("adminEmail").innerHTML;
-            } else if(value == "agent") {
+            } else if (value == "agent") {
                 document.getElementById("email").value = document.getElementById("agentEmail").innerHTML;
-            } else if(value == "user") {
+            } else if (value == "user") {
                 document.getElementById("email").value = document.getElementById("userEmail").innerHTML;
             }
             document.getElementById("password").value = "password";

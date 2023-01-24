@@ -23,8 +23,12 @@ class RoleAndPermissionSeeder extends Seeder
         Permission::create(['name' => 'edit tickets']);
         Permission::create(['name' => 'look ticket logs']);
 
-        Role::create(['name' => 'admin'])
+        Role::create(['name' => 'superadmin'])
             ->givePermissionTo(Permission::all());
+
+        Role::create(['name' => 'admin'])
+            ->givePermissionTo(Permission::all())
+            ->revokePermissionTo(['create tickets']);
 
         Role::create(['name' => 'agent'])
             ->givePermissionTo(['edit tickets', 'look tickets']);

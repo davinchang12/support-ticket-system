@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -17,7 +18,11 @@ class TicketFactory extends Factory
     public function definition()
     {
         return [
-            //
+            'title' => fake()->text(),
+            'description' => fake()->paragraph(),
+            'priority' => fake()->randomElement(['high', 'medium', 'low']),
+            'status' => fake()->randomElement(['open', 'close']),
+            'customer_id' => User::factory()->create()->assignRole('customer'),
         ];
     }
 }

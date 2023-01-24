@@ -18,8 +18,9 @@ return new class extends Migration
             $table->string('title');
             $table->text('description')->nullable();
             $table->string('priority');
-            $table->string('status');
-            $table->foreignId('user_id');
+            $table->string('status')->default('open');
+            $table->foreignId('customer_id')->nullable();
+            $table->foreignId('agent_id')->nullable();
             $table->timestamps();
         });
     }
