@@ -173,4 +173,76 @@ class TicketTest extends TestCase
             'status' => 'completed',
         ]);
     }
+
+    // Customer Section
+    public function test_customer_can_open_ticket_page_without_data()
+    {
+        $response = $this->actingAs($this->customer)->get('/home/tickets');
+
+        $response->assertStatus(200);
+        $response->assertSee('No ticket found.');
+    }
+
+    public function test_customer_can_open_ticket_page_with_data()
+    {
+        $ticket = Ticket::factory()->create([
+            'customer_id' => $this->customer->id,
+        ]);
+
+        $response = $this->actingAs($this->customer)->get('/home/tickets');
+
+        $response->assertStatus(200);
+        $response->assertDontSee('No ticket found.');
+
+        $response->assertViewHas('tickets', function ($tickets) use ($ticket) {
+            return $tickets->contains($ticket);
+        });
+    }
+
+    public function test_customer_can_create_ticket()
+    {
+        $category = Category::factory()->create();
+        $label = Label::factory()->create();
+
+        $response = $this->actingAs($this->customer)->get('/home/tickets');
+        $response->assertSee('Create ticket');
+
+        $response = $this->actingAs($this->customer)->get('/home/tickets/create');
+        $response->assertStatus(200);
+
+        $response = $this->actingAs($this->customer)->post('/home/tickets', [
+            'title' => 'Test',
+            'description' => 'test',
+            'categories' => [$category->id],
+            'labels' => [$label->id],
+            'priority' => 'high',
+        ]);
+
+        $response->assertStatus(302);
+
+        $this->assertDatabaseHas('tickets', [
+            'title' => 'Test',
+        ]);
+    }
+
+    public function test_customer_cannot_edit_ticket()
+    {
+        $category = Category::factory()->create();
+        $label = Label::factory()->create();
+        $ticket = Ticket::factory()->create();
+
+        $response = $this->actingAs($this->customer)->get('/home/tickets/' . $ticket->id . '/edit');
+        $response->assertStatus(403);
+
+        $response = $this->actingAs($this->customer)->put('/home/tickets/' . $ticket->id, [
+            'title' => $ticket->title,
+            'description' => $ticket->description,
+            'categories' => [$category->id],
+            'labels' => [$label->id],
+            'priority' => 'high',
+            'status' => 'completed',
+        ]);
+
+        $response->assertStatus(403);
+    }
 }

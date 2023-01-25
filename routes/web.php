@@ -31,6 +31,10 @@ Route::group([
         Route::get('/tickets/create', [TicketController::class, 'create'])->name('tickets.create');
         Route::post('/tickets', [TicketController::class, 'store'])->name('tickets.store');
     });
+    Route::group(['middleware' => 'permission:edit tickets'], function () {
+        Route::get('/tickets/{ticket}/edit', [TicketController::class, 'edit'])->name('tickets.edit');
+        Route::put('/tickets/{ticket}', [TicketController::class, 'update'])->name('tickets.update');
+    });
     
-    Route::resource('/tickets', TicketController::class)->except(['create', 'store', 'destroy']);
+    Route::resource('/tickets', TicketController::class)->only(['index', 'show']);
 });
