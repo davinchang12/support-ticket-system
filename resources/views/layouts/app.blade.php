@@ -60,21 +60,23 @@
                                 </a>
 
                                 <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                                    <a class="dropdown-item" href="{{ route('home.index') }}">
-                                        {{ __('Dashboard') }}
-                                    </a>
-                                    {{-- <a class="dropdown-item" href="{{ route('logout') }}">
+                                    @role('superadmin|admin')
+                                        <a class="dropdown-item" href="{{ route('home.index') }}">
+                                            {{ __('Dashboard') }}
+                                        </a>
+                                        {{-- <a class="dropdown-item" href="{{ route('logout') }}">
                                         {{ __('Users') }}
                                     </a> --}}
-                                    <a class="dropdown-item" href="{{ route('home.categories.index') }}">
-                                        {{ __('Categories') }}
-                                    </a>
-                                    {{-- <a class="dropdown-item" href="{{ route('logout') }}">
-                                        {{ __('Labels') }}
-                                    </a> --}}
-                                    {{-- <a class="dropdown-item" href="{{ route('logout') }}">
+                                        <a class="dropdown-item" href="{{ route('home.categories.index') }}">
+                                            {{ __('Categories') }}
+                                        </a>
+                                        <a class="dropdown-item" href="{{ route('home.labels.index') }}">
+                                            {{ __('Labels') }}
+                                        </a>
+                                        {{-- <a class="dropdown-item" href="{{ route('logout') }}">
                                         {{ __('Ticket Logs') }}
                                     </a> --}}
+                                    @endrole
                                     <a class="dropdown-item" href="{{ route('home.tickets.index') }}">
                                         {{ __('Tickets') }}
                                     </a>
