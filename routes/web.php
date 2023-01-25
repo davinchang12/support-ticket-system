@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\TicketController;
+use App\Http\Controllers\CategoryController;
 
 /*
 |--------------------------------------------------------------------------
@@ -31,10 +32,15 @@ Route::group([
         Route::get('/tickets/create', [TicketController::class, 'create'])->name('tickets.create');
         Route::post('/tickets', [TicketController::class, 'store'])->name('tickets.store');
     });
+
     Route::group(['middleware' => 'permission:edit tickets'], function () {
         Route::get('/tickets/{ticket}/edit', [TicketController::class, 'edit'])->name('tickets.edit');
         Route::put('/tickets/{ticket}', [TicketController::class, 'update'])->name('tickets.update');
     });
     
     Route::resource('/tickets', TicketController::class)->only(['index', 'show']);
+
+    Route::group(['middleware' => 'role:superadmin|admin'], function() {
+        Route::resource('/categories', CategoryController::class);
+    });
 });
