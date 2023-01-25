@@ -35,10 +35,14 @@
                                         <tr>
                                             <td class="align-middle">{{ $category->name }}</td>
                                             <td>
-                                                <a class="btn btn-primary"
-                                                    href="{{ route('home.categories.show', $category->id) }}">Show</a>
                                                 <a class="btn btn-secondary"
                                                     href="{{ route('home.categories.edit', $category->id) }}">Edit</a>
+                                                <form action="{{ route('home.categories.destroy', $category) }}" method="POST" style="display: inline-block;">
+                                                    @method('delete')
+                                                    @csrf
+
+                                                    <button type="submit" class="btn btn-danger">Delete</button>
+                                                </form>
                                             </td>
                                         </tr>
                                     @endforeach

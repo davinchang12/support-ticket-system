@@ -38,6 +38,6 @@ class CategoryController extends Controller
     {
         $category->delete();
 
-        return redirect()->route('home.categories.index')->with('success', 'Successfully deletedd category.');
+        return redirect()->route('home.categories.index')->with('success', 'Successfully deleted category.');
     }
 }
