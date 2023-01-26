@@ -64,9 +64,9 @@
                                         <a class="dropdown-item" href="{{ route('home.index') }}">
                                             {{ __('Dashboard') }}
                                         </a>
-                                        {{-- <a class="dropdown-item" href="{{ route('logout') }}">
-                                        {{ __('Users') }}
-                                    </a> --}}
+                                        <a class="dropdown-item" href="{{ route('home.users.index') }}">
+                                            {{ __('Users') }}
+                                        </a>
                                         <a class="dropdown-item" href="{{ route('home.categories.index') }}">
                                             {{ __('Categories') }}
                                         </a>

@@ -5,10 +5,8 @@
         <div class="row justify-content-center">
             <div class="col-md-8">
 
-                <a href="{{ route('home.labels.create') }}" class="btn btn-primary">Create label</a>
-
                 <div class="card mt-3">
-                    <div class="card-header">{{ __('Label') }}</div>
+                    <div class="card-header">{{ __('User') }}</div>
 
                     <div class="card-body">
 
@@ -20,35 +18,32 @@
                             </div>
                         @endif
 
-                        @if (count($labels) > 0)
+                        @if (count($users) > 0)
                             <table class="table">
                                 <thead>
                                     <tr>
                                         <th scope="col">Name</th>
+                                        <th scope="col">Email</th>
+                                        <th scope="col">Role</th>
                                         <th scope="col"></th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($labels as $label)
+                                    @foreach ($users as $user)
                                         <tr>
-                                            <td class="align-middle">{{ $label->name }}</td>
+                                            <td class="align-middle">{{ $user->name }}</td>
+                                            <td class="align-middle">{{ $user->email }}</td>
+                                            <td class="align-middle">{{ $user->getRoleNames()->toArray()[0] }}</td>
                                             <td>
                                                 <a class="btn btn-secondary"
-                                                    href="{{ route('home.labels.edit', $label->id) }}">Edit</a>
-                                                <form action="{{ route('home.labels.destroy', $label) }}" method="POST"
-                                                    style="display: inline-block;">
-                                                    @method('delete')
-                                                    @csrf
-
-                                                    <button type="submit" class="btn btn-danger">Delete</button>
-                                                </form>
+                                                    href="{{ route('home.users.edit', $user->id) }}">Edit</a>
                                             </td>
                                         </tr>
                                     @endforeach
                                 </tbody>
                             </table>
                         @else
-                            No label found.
+                            No user found.
                         @endif
                     </div>
                 </div>

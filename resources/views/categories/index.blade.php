@@ -5,9 +5,7 @@
         <div class="row justify-content-center">
             <div class="col-md-8">
 
-                @can('create tickets')
-                    <a href="{{ route('home.categories.create') }}" class="btn btn-primary">Create category</a>
-                @endcan
+                <a href="{{ route('home.categories.create') }}" class="btn btn-primary">Create category</a>
 
                 <div class="card mt-3">
                     <div class="card-header">{{ __('Category') }}</div>
@@ -37,7 +35,8 @@
                                             <td>
                                                 <a class="btn btn-secondary"
                                                     href="{{ route('home.categories.edit', $category->id) }}">Edit</a>
-                                                <form action="{{ route('home.categories.destroy', $category) }}" method="POST" style="display: inline-block;">
+                                                <form action="{{ route('home.categories.destroy', $category) }}"
+                                                    method="POST" style="display: inline-block;">
                                                     @method('delete')
                                                     @csrf
 

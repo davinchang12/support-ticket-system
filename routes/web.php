@@ -6,6 +6,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\TicketController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\LabelController;
+use App\Http\Controllers\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -43,6 +44,7 @@ Route::group([
 
     Route::group(['middleware' => 'role:superadmin|admin'], function() {
         Route::resource('/categories', CategoryController::class)->except(['show']);
-        Route::resource('/labels', LabelController::class);
+        Route::resource('/labels', LabelController::class)->except(['show']);
+        Route::resource('/users', UserController::class)->only(['index', 'edit', 'update']);
     });
 });
