@@ -9,18 +9,19 @@ use App\Models\Category;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreTicketRequest;
 use App\Http\Requests\UpdateTicketRequest;
+use App\Models\TicketLog;
 
 class TicketController extends Controller
 {
     public function index()
     {
         $loggedInUserRole = auth()->user()->getRoleNames()->toArray()[0];
-        if (!in_array($loggedInUserRole, ['admin', 'superadmin'])) {
+        if (in_array($loggedInUserRole, ['admin', 'superadmin'])) {
+            $tickets = Ticket::all();
+        } else {
             $tickets = Ticket::where('customer_id', auth()->id())
                 ->orWhere('agent_id', auth()->id())
                 ->get();
-        } else {
-            $tickets = Ticket::all();
         }
 
         return view('tickets.index', compact('tickets'));
@@ -55,10 +56,17 @@ class TicketController extends Controller
             $ticket->categories()->attach($category);
         }
 
+        TicketLog::create([
+            'user_id' => auth()->id(),
+            'ticket_id' => $ticket->id,
+            'log' => 'created new ticket',
+        ]);
+
         return redirect()->route('home.tickets.index')->with('success', 'Successfully create new ticket.');
     }
 
-    public function show($id) {
+    public function show($id)
+    {
         $ticket = Ticket::with(['labels', 'categories'])->findOrFail($id);
         $labels = Label::all();
         $categories = Category::all();
@@ -107,6 +115,12 @@ class TicketController extends Controller
         foreach ($request->categories as $category) {
             $ticket->categories()->attach($category);
         }
+
+        TicketLog::create([
+            'user_id' => auth()->id(),
+            'ticket_id' => $ticket->id,
+            'log' => 'updated ticket',
+        ]);
 
         return redirect()->route('home.tickets.index')->with('success', 'Ticket has been updated.');
     }

@@ -41,4 +41,8 @@ class Ticket extends Model implements HasMedia
     public function labels() {
         return $this->belongsToMany(Label::class);
     }
+
+    public function ticketlogs() {
+        return $this->hasMany(TicketLog::class);
+    }
 }

@@ -73,9 +73,9 @@
                                         <a class="dropdown-item" href="{{ route('home.labels.index') }}">
                                             {{ __('Labels') }}
                                         </a>
-                                        {{-- <a class="dropdown-item" href="{{ route('logout') }}">
-                                        {{ __('Ticket Logs') }}
-                                    </a> --}}
+                                        <a class="dropdown-item" href="{{ route('home.ticketlogs.index') }}">
+                                            {{ __('Ticket Logs') }}
+                                        </a>
                                     @endrole
                                     <a class="dropdown-item" href="{{ route('home.tickets.index') }}">
                                         {{ __('Tickets') }}
