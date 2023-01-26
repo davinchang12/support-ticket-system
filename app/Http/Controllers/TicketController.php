@@ -58,6 +58,17 @@ class TicketController extends Controller
         return redirect()->route('home.tickets.index')->with('success', 'Successfully create new ticket.');
     }
 
+    public function show($id) {
+        $ticket = Ticket::with(['labels', 'categories'])->findOrFail($id);
+        $labels = Label::all();
+        $categories = Category::all();
+        $agents = User::with('roles')->whereHas('roles', function ($query) {
+            $query->where('name', 'agent');
+        })->get();
+
+        return view('tickets.show', compact('ticket', 'labels', 'categories', 'agents'));
+    }
+
     public function edit($id)
     {
         $ticket = Ticket::with(['labels', 'categories'])->findOrFail($id);
