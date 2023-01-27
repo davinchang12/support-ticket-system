@@ -14,7 +14,38 @@
                         </div>
                     @endif
 
-                    {{ __('You are logged in!') }}
+                    <div class="d-flex gap-1">
+                        <div class="card">
+                            <div class="card-header text-center">Total tickets</div>
+                            <div class="card-body text-center">
+                                {{ $totalTickets }}
+                            </div>
+                        </div>
+                        <div class="card">
+                            <div class="card-header text-center">Total open tickets</div>
+                            <div class="card-body text-center">
+                                {{ $openTickets }}
+                            </div>
+                        </div>
+                        <div class="card">
+                            <div class="card-header text-center">Total in progress tickets</div>
+                            <div class="card-body text-center">
+                                {{ $inProgressTickets }}
+                            </div>
+                        </div>
+                        <div class="card">
+                            <div class="card-header text-center">Total cancelled tickets</div>
+                            <div class="card-body text-center">
+                                {{ $cancelledTickets }}
+                            </div>
+                        </div>
+                        <div class="card">
+                            <div class="card-header text-center">Total completed tickets</div>
+                            <div class="card-body text-center">
+                                {{ $completedTickets }}
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

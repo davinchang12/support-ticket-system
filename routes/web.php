@@ -29,7 +29,13 @@ Route::group([
     'prefix' => 'home',
     'as' => 'home.',
 ], function () {
-    Route::get('/', [HomeController::class, 'index'])->name('index');
+    Route::group(['middleware' => 'role:superadmin|admin'], function () {
+        Route::get('/', [HomeController::class, 'index'])->name('index');
+        Route::resource('/categories', CategoryController::class)->except(['show']);
+        Route::resource('/labels', LabelController::class)->except(['show']);
+        Route::resource('/users', UserController::class)->only(['index', 'edit', 'update']);
+        Route::resource('/ticketlogs', TicketLogController::class)->only(['index', 'show']);
+    });
 
     Route::group(['middleware' => 'permission:create tickets'], function () {
         Route::get('/tickets/create', [TicketController::class, 'create'])->name('tickets.create');
@@ -40,13 +46,6 @@ Route::group([
         Route::get('/tickets/{ticket}/edit', [TicketController::class, 'edit'])->name('tickets.edit');
         Route::put('/tickets/{ticket}', [TicketController::class, 'update'])->name('tickets.update');
     });
-    
-    Route::resource('/tickets', TicketController::class)->only(['index', 'show']);
 
-    Route::group(['middleware' => 'role:superadmin|admin'], function() {
-        Route::resource('/categories', CategoryController::class)->except(['show']);
-        Route::resource('/labels', LabelController::class)->except(['show']);
-        Route::resource('/users', UserController::class)->only(['index', 'edit', 'update']);
-        Route::resource('/ticketlogs', TicketLogController::class)->only(['index', 'show']);
-    });
+    Route::resource('/tickets', TicketController::class)->only(['index', 'show']);
 });
