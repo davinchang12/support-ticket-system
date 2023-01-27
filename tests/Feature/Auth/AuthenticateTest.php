@@ -41,7 +41,7 @@ class AuthenticateTest extends TestCase
         $this->assertEquals('customer', $user->getRoleNames()->toArray()[0]);
     }
 
-    public function test_guest_can_login()
+    public function test_customer_and_agent_can_login_and_redirect_to_ticket_page()
     {
         $user = User::factory()->create()->assignRole('customer');
 
@@ -51,9 +51,19 @@ class AuthenticateTest extends TestCase
         ]);
 
         $response->assertStatus(302);
-        $response->assertRedirect('/home');
+        $response->assertRedirect('/home/tickets');
+    }
 
-        $response = $this->get('/home');
-        $response->assertSee('logged in');
+    public function test_admin_can_login_and_redirect_to_dashboard()
+    {
+        $user = User::factory()->create()->assignRole('admin');
+
+        $response = $this->post('/login', [
+            'email' => $user->email,
+            'password' => 'password',
+        ]);
+
+        $response->assertStatus(302);
+        $response->assertRedirect('/home');
     }
 }

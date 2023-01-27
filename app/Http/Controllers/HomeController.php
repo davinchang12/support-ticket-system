@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Ticket;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -23,6 +24,12 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        $totalTickets = Ticket::count();
+        $openTickets = Ticket::where('status', 'open')->count();
+        $inProgressTickets = Ticket::where('status', 'in progress')->count();
+        $cancelledTickets = Ticket::where('status', 'cancelled')->count();
+        $completedTickets = Ticket::where('status', 'completed')->count();
+
+        return view('home', compact('totalTickets', 'openTickets', 'inProgressTickets', 'cancelledTickets', 'completedTickets'));
     }
 }
