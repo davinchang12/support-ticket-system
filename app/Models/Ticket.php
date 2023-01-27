@@ -45,4 +45,8 @@ class Ticket extends Model implements HasMedia
     public function ticketlogs() {
         return $this->hasMany(TicketLog::class);
     }
+
+    public function comments() {
+        return $this->hasMany(Comment::class);
+    }
 }

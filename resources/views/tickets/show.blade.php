@@ -36,7 +36,8 @@
                                         <input class="form-check-input" type="checkbox"
                                             id="inlineLabelCheckbox{{ $loop->iteration }}" name="labels[]"
                                             value="{{ $label->id }}"
-                                            {{ $ticket->labels->pluck('id')->contains($label->id) ? 'checked' : '' }} disabled>
+                                            {{ $ticket->labels->pluck('id')->contains($label->id) ? 'checked' : '' }}
+                                            disabled>
                                         <label class="form-check-label"
                                             for="inlineLabelCheckbox{{ $loop->iteration }}">{{ $label->name }}</label>
                                     </div>
@@ -50,7 +51,8 @@
                                         <input class="form-check-input" type="checkbox"
                                             id="inlineCategoryCheckbox{{ $loop->iteration }}" name="categories[]"
                                             value="{{ $category->id }}"
-                                            {{ $ticket->categories->pluck('id')->contains($category->id) ? 'checked' : '' }} disabled>
+                                            {{ $ticket->categories->pluck('id')->contains($category->id) ? 'checked' : '' }}
+                                            disabled>
                                         <label class="form-check-label"
                                             for="inlineCategoryCheckbox{{ $loop->iteration }}">{{ $category->name }}</label>
                                     </div>
@@ -75,6 +77,29 @@
                                 @endif
                             </div>
 
+                            <div class="mb-3">
+                                <label for="inputComments" class="form-label">Comments</label>
+
+                                @forelse ($comments as $comment)
+                                    <div class="card mb-3">
+                                        <div class="card-header">{{ $comment->user->name }}</div>
+                                        <div class="card-body">
+                                            {{ $comment->comment }}
+                                            <h6 class="card-subtitle mt-3 text-muted">Created at : {{ $comment->created_at }}</h6>
+                                        </div>
+                                    </div>
+                                @empty
+                                @endforelse
+
+                                <form action="{{ route('home.tickets.comments') }}" method="POST">
+                                    <input type="hidden" name="user_id" value="{{ auth()->id() }}">
+                                    <input type="hidden" name="ticket_id" value="{{ $ticket->id }}">
+                                    <textarea class="form-control mb-3" name="comment" id="inputComments" rows="3" style="width: 100%;"
+                                        placeholder="Add comment here..."></textarea>
+                                    @csrf
+                                    <button type="submit" class="btn btn-primary float-end">Comment</button>
+                                </form>
+                            </div>
                         @else
                             Sorry, tickets detail is unavailable at the moment. Please contact our admin via
                             <b>admin@admin.com</b>.

@@ -27,7 +27,7 @@
                                     <label for="inputTitle" class="form-label">Title</label>
                                     <input type="text" class="form-control" name="title" id="inputTitle"
                                         value="{{ old('title', $ticket->title) }}"
-                                        @unlessrole('superadmin|admin') disabled @endunlessrole>
+                                        @unlessrole('superadmin|admin') readonly @endunlessrole>
                                     @error('title')
                                         <span class="text-danger">{{ $message }}</span>
                                     @enderror
@@ -36,7 +36,7 @@
                                 <div class="mb-3">
                                     <label for="inputMessage" class="form-label">Message</label>
                                     <textarea class="form-control" name="description" id="inputMessage" rows="10" style="width: 100%;"
-                                        @unlessrole('superadmin|admin') disabled @endunlessrole>{{ old('description', $ticket->description) }}</textarea>
+                                        @unlessrole('superadmin|admin') readonly @endunlessrole>{{ old('description', $ticket->description) }}</textarea>
                                 </div>
 
                                 <div class="mb-3">
@@ -47,7 +47,7 @@
                                                 id="inlineLabelCheckbox{{ $loop->iteration }}" name="labels[]"
                                                 value="{{ $label->id }}"
                                                 {{ $ticket->labels->pluck('id')->contains($label->id) ? 'checked' : '' }}
-                                                @unlessrole('superadmin|admin') disabled @endunlessrole>
+                                                @unlessrole('superadmin|admin') readonly @endunlessrole>
                                             <label class="form-check-label"
                                                 for="inlineLabelCheckbox{{ $loop->iteration }}">{{ $label->name }}</label>
                                         </div>
@@ -65,7 +65,7 @@
                                                 id="inlineCategoryCheckbox{{ $loop->iteration }}" name="categories[]"
                                                 value="{{ $category->id }}"
                                                 {{ $ticket->categories->pluck('id')->contains($category->id) ? 'checked' : '' }}
-                                                @unlessrole('superadmin|admin') disabled @endunlessrole>
+                                                @unlessrole('superadmin|admin') readonly @endunlessrole>
                                             <label class="form-check-label"
                                                 for="inlineCategoryCheckbox{{ $loop->iteration }}">{{ $category->name }}</label>
                                         </div>
@@ -78,7 +78,7 @@
                                 <div class="mb-3">
                                     <label class="form-label" for="inputPriority">Priority</label>
                                     <select name="priority" id="inputPriority" class="form-control"
-                                        @unlessrole('superadmin|admin') disabled @endunlessrole>
+                                        @unlessrole('superadmin|admin') readonly @endunlessrole>
                                         @foreach (App\Models\Ticket::PRIORITY as $priority)
                                             <option value="{{ $priority }}"
                                                 {{ $ticket->priority == $priority ? 'selected' : '' }}>
@@ -90,7 +90,7 @@
                                 <div class="mb-3">
                                     <label class="form-label" for="inputStatus">Status</label>
                                     <select name="status" id="inputStatus" class="form-control"
-                                        @unlessrole('superadmin|admin|agent') disabled @endunlessrole>
+                                        @unlessrole('superadmin|admin|agent') readonly @endunlessrole>
                                         @foreach (App\Models\Ticket::STATUS as $status)
                                             <option value="{{ $status }}"
                                                 {{ $ticket->status == $status ? 'selected' : '' }}>

@@ -55,4 +55,8 @@ class User extends Authenticatable
     public function ticketlogs() {
         return $this->hasMany(TicketLog::class);
     }
+
+    public function comments() {
+        return $this->hasMany(Comment::class);
+    }
 }

@@ -9,6 +9,7 @@ use App\Models\Category;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreTicketRequest;
 use App\Http\Requests\UpdateTicketRequest;
+use App\Models\Comment;
 use App\Models\TicketLog;
 
 class TicketController extends Controller
@@ -73,8 +74,11 @@ class TicketController extends Controller
         $agents = User::with('roles')->whereHas('roles', function ($query) {
             $query->where('name', 'agent');
         })->get();
+        $comments = Comment::with(['user'])
+            ->where('ticket_id', $id)
+            ->get();
 
-        return view('tickets.show', compact('ticket', 'labels', 'categories', 'agents'));
+        return view('tickets.show', compact('ticket', 'labels', 'categories', 'agents', 'comments'));
     }
 
     public function edit($id)
